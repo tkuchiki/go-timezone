@@ -41,7 +41,7 @@ func main() {
 
 	fmt.Println("## UTC")
 	fmt.Println(utc)
-	fmt.Println("## UTC -> JST")
+	fmt.Println("## UTC -> JST(current timezone)")
 	fmt.Println(jst)
 
 	var est time.Time
