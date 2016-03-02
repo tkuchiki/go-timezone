@@ -41,12 +41,12 @@ func main() {
 
 	fmt.Println("## UTC")
 	fmt.Println(utc)
-	fmt.Println("## UTC -> JST(current timezone)")
+	fmt.Println("## UTC -> JST (current timezone)")
 	fmt.Println(jst)
 
 	var est time.Time
 	est, _ = timezone.FixedTimezone(now, "America/New_York")
-	fmt.Println("## UTC -> EST")
+	fmt.Println("## JST -> EST")
 	fmt.Println(est)
 }
 ```
@@ -62,8 +62,8 @@ func main() {
 2016-03-02 14:33:49.078798783 +0900 JST
 ## UTC
 2016-03-02 05:33:49.078798783 +0000 UTC
-## UTC -> JST
+## UTC -> JST (current timezone)
 2016-03-02 14:33:49.078798783 +0900 JST
-## UTC -> EST
+## JST -> EST
 2016-03-02 00:33:49.078798783 -0500 EST
 ```
