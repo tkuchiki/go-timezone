@@ -11,6 +11,7 @@ package main
 import (
 	"fmt"
 	"github.com/tkuchiki/go-timezone"
+    "time"
 )
 
 func main() {
@@ -26,6 +27,27 @@ func main() {
 
 	zones, err = timezone.GetTimezones("foobar")
 	fmt.Println(zones, err)
+
+	now := time.Now()
+
+	fmt.Println("## current timezone")
+	fmt.Println(now)
+
+	var jst time.Time
+	loc, _ := time.LoadLocation("UTC")
+	utc := now.In(loc)
+
+	jst, _ = timezone.FixedTimezone(utc, "")
+
+	fmt.Println("## UTC")
+	fmt.Println(utc)
+	fmt.Println("## UTC -> JST")
+	fmt.Println(jst)
+
+	var est time.Time
+	est, _ = timezone.FixedTimezone(now, "America/New_York")
+	fmt.Println("## UTC -> EST")
+	fmt.Println(est)
 }
 ```
 
@@ -36,4 +58,12 @@ func main() {
 0 Invalid short timezone: hogehoge
 [Antarctica/Troll Etc/UTC Etc/Universal Etc/Zulu UTC Universal Zulu] <nil>
 [] Invalid short timezone: foobar
+## current timezone
+2016-03-02 14:33:49.078798783 +0900 JST
+## UTC
+2016-03-02 05:33:49.078798783 +0000 UTC
+## UTC -> JST
+2016-03-02 14:33:49.078798783 +0900 JST
+## UTC -> EST
+2016-03-02 00:33:49.078798783 -0500 EST
 ```
