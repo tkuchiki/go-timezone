@@ -10,24 +10,23 @@ package main
 
 import (
 	"fmt"
-    "github.com/tkuchiki/go-timezone"
+	"github.com/tkuchiki/go-timezone"
 )
 
 func main() {
-	offset, err := GetOffset("JST")
+	offset, err := timezone.GetOffset("JST")
 	fmt.Println(offset, err)
 
-	offset, err = GetOffset("hogehoge")
+	offset, err = timezone.GetOffset("hogehoge")
 	fmt.Println(offset, err)
 
 	var zones []string
-	zones, err = GetTimezones("UTC")
+	zones, err = timezone.GetTimezones("UTC")
 	fmt.Println(zones, err)
 
-	zones, err = GetTimezones("foobar")
+	zones, err = timezone.GetTimezones("foobar")
 	fmt.Println(zones, err)
 }
-
 ```
 
 ### Result
