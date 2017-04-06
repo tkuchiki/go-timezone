@@ -5,12 +5,12 @@ Timezone utility for Golang
 
 ### Code
 
-```
+```go
 package main
 
 import (
-	"fmt"
-	"github.com/tkuchiki/go-timezone"
+    "fmt"
+    "github.com/tkuchiki/go-timezone"
     "time"
 )
 
