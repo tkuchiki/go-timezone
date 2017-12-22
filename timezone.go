@@ -1116,12 +1116,20 @@ var timezones = map[string][]string{
 	},
 }
 
+func GetAllOffsets() map[string]int {
+	return offsets
+}
+
 func GetOffset(shortZone string) (int, error) {
 	if _, ok := offsets[shortZone]; !ok {
 		return 0, errors.New(fmt.Sprintf("Invalid short timezone: %s", shortZone))
 	}
 
 	return offsets[shortZone], nil
+}
+
+func GetAllTimezones() map[string][]string {
+	return timezones
 }
 
 func GetTimezones(shortZone string) ([]string, error) {
