@@ -1145,10 +1145,6 @@ func FixedTimezone(t time.Time, timezone string) (time.Time, error) {
 	var loc *time.Location
 	zone, offset := time.Now().In(time.Local).Zone()
 
-	if zone == "UTC" {
-		return t, err
-	}
-
 	if timezone != "" {
 		loc, err = time.LoadLocation(timezone)
 		if err != nil {
