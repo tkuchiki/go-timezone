@@ -1120,12 +1120,36 @@ func GetAllOffsets() map[string]int {
 	return offsets
 }
 
-func GetOffset(shortZone string) (int, error) {
+func GetOffset(shortZone string, dst ...bool) (int, error) {
+	err := errors.New(fmt.Sprintf("Invalid short timezone: %s", shortZone))
 	if _, ok := offsets[shortZone]; !ok {
-		return 0, errors.New(fmt.Sprintf("Invalid short timezone: %s", shortZone))
+		return 0, err
 	}
 
-	return offsets[shortZone], nil
+	if len(dst) == 0 || !dst[0] {
+		return offsets[shortZone], nil
+	}
+
+	var dstOffset int
+	var tzs []string
+	var ok bool
+	if tzs, ok = timezones[shortZone]; !ok || len(tzs) == 0 {
+		return 0, err
+	}
+	for _, tz := range tzs {
+		var loc *time.Location
+		loc, err = time.LoadLocation(tz)
+		if err != nil {
+			return 0, err
+		}
+
+		_, dstOffset = time.Now().In(loc).Zone()
+		if offsets[shortZone] != dstOffset {
+			break
+		}
+	}
+
+	return dstOffset, nil
 }
 
 func GetAllTimezones() map[string][]string {
