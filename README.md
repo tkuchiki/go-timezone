@@ -48,6 +48,14 @@ func main() {
 	est, _ = timezone.FixedTimezone(now, "America/New_York")
 	fmt.Println("## current timezone -> EDT")
 	fmt.Println(est)
+
+    offset, _ = timezone.GetOffset("EST")
+    fmt.Println("## DST is not considered")
+    fmt.Println(offset)
+
+    offset, _ = timezone.GetOffset("EST", true)
+    fmt.Println("## DST is considered")
+    fmt.Println(offset)
 }
 ```
 
@@ -68,6 +76,10 @@ $ TZ=UTC go run /path/to/main.go
 2018-03-15 00:07:01.921041165 +0000 UTC
 ## current timezone -> EDT
 2018-03-14 20:07:01.921041165 -0400 EDT
+## DST is not considered
+-18000
+## DST is considered
+-14400
 
 # current timezone = JST
 $ TZ=Asia/Tokyo go run /path/to/main.go
@@ -83,4 +95,8 @@ $ TZ=Asia/Tokyo go run /path/to/main.go
 2018-03-15 09:08:58.410680998 +0900 JST
 ## current timezone -> EDT
 2018-03-14 20:08:58.410680998 -0400 EDT
+## DST is not considered
+-18000
+## DST is considered
+-14400
 ```
