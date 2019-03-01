@@ -1181,3 +1181,23 @@ func FixedTimezone(t time.Time, timezone string) (time.Time, error) {
 	loc = time.FixedZone(zone, offset)
 	return t.In(loc), err
 }
+
+func GetTimezoneAbbreviation(timezoneName string) (string, error) {
+	tzShort := ""
+
+	// Loop through all of the timezones and look for a match against the
+	// provided timezone to find the timezone abbreviation
+	for tzAbbrev, zonenames := range timezones {
+		for _, zonename := range zonenames {
+			if zonename == timezoneName {
+				tzShort = tzAbbrev
+			}
+		}
+	}
+
+	if tzShort == "" {
+		return tzShort, errors.New(fmt.Sprintf("Failed to find timezone abbreviation for: %s", timezoneName))
+	}
+
+	return tzShort, nil
+}
