@@ -1181,3 +1181,22 @@ func FixedTimezone(t time.Time, timezone string) (time.Time, error) {
 	loc = time.FixedZone(zone, offset)
 	return t.In(loc), err
 }
+
+func GetTimezoneAbbreviation(timezoneName string, dst ...bool) (string, error) {
+	loc, err := time.LoadLocation(timezoneName)
+	if err != nil {
+		return "", err
+	}
+
+	var zone string
+
+	if len(dst) == 0 || !dst[0] {
+		now := time.Now()
+		zone, _ = time.Date(now.Year(), time.January, 1, 0, 0, 0, 0, time.UTC).In(loc).Zone()
+	} else {
+		// considering DST
+		zone, _ = time.Now().In(loc).Zone()
+	}
+
+	return zone, nil
+}
