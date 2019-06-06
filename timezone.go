@@ -86,6 +86,7 @@ var offsets = map[string]int{
 	"SCT":    14400,
 	"AFT":    16200,
 	"AQTT":   18000,
+	"CDT":    18000,
 	"GMT-5":  18000,
 	"MAWT":   18000,
 	"MVT":    18000,
@@ -102,6 +103,7 @@ var offsets = map[string]int{
 	"BDT":    21600,
 	"BTT":    21600,
 	"GMT-6":  21600,
+	"MDT":    21600,
 	"IOT":    21600,
 	"KGT":    21600,
 	"NOVT":   21600,
@@ -395,6 +397,9 @@ var timezones = map[string][]string{
 	},
 	"CCT": []string{
 		"Indian/Cocos",
+	},
+	"CDT": []string{
+		"Etc/GMT-5",
 	},
 	"CET": []string{
 		"Africa/Algiers",
@@ -867,6 +872,9 @@ var timezones = map[string][]string{
 	},
 	"MAWT": []string{
 		"Antarctica/Mawson",
+	},
+	"MDT": []string{
+		"Etc/GMT-6",
 	},
 	"MET": []string{
 		"MET",
