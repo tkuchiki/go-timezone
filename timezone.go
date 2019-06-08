@@ -7,6 +7,7 @@ import (
 )
 
 var offsets = map[string]int{
+	"NZST":   -43200,
 	"GMT+12": -43200,
 	"GMT+11": -39600,
 	"NUT":    -39600,
@@ -51,8 +52,10 @@ var offsets = map[string]int{
 	"ROTT":   -10800,
 	"SRT":    -10800,
 	"WGT":    -10800,
+	"NDT":    -9000,
 	"FNT":    -7200,
 	"GMT+2":  -7200,
+	"CEST":   -7200,
 	"UYST":   -7200,
 	"AZOT":   -3600,
 	"CVT":    -3600,
@@ -86,6 +89,7 @@ var offsets = map[string]int{
 	"SCT":    14400,
 	"AFT":    16200,
 	"AQTT":   18000,
+	"CDT":    18000,
 	"GMT-5":  18000,
 	"MAWT":   18000,
 	"MVT":    18000,
@@ -102,6 +106,7 @@ var offsets = map[string]int{
 	"BDT":    21600,
 	"BTT":    21600,
 	"GMT-6":  21600,
+	"MDT":    21600,
 	"IOT":    21600,
 	"KGT":    21600,
 	"NOVT":   21600,
@@ -121,6 +126,7 @@ var offsets = map[string]int{
 	"AWST":   28800,
 	"BNT":    28800,
 	"CHOT":   28800,
+	"AKDT":   28800,
 	"GMT-8":  28800,
 	"HKT":    28800,
 	"IRKT":   28800,
@@ -219,6 +225,9 @@ var timezones = map[string][]string{
 	},
 	"AFT": []string{
 		"Asia/Kabul",
+	},
+	"AKDT": []string{
+		"Etc/GMT-8",
 	},
 	"AKST": []string{
 		"America/Anchorage",
@@ -396,6 +405,9 @@ var timezones = map[string][]string{
 	"CCT": []string{
 		"Indian/Cocos",
 	},
+	"CDT": []string{
+		"Etc/GMT-5",
+	},
 	"CET": []string{
 		"Africa/Algiers",
 		"Africa/Ceuta",
@@ -435,6 +447,9 @@ var timezones = map[string][]string{
 		"Europe/Zagreb",
 		"Europe/Zurich",
 		"Poland",
+	},
+	"CEST": []string{
+		"Etc/GMT+2",
 	},
 	"CHADT": []string{
 		"NZ-CHAT",
@@ -868,6 +883,9 @@ var timezones = map[string][]string{
 	"MAWT": []string{
 		"Antarctica/Mawson",
 	},
+	"MDT": []string{
+		"Etc/GMT-6",
+	},
 	"MET": []string{
 		"MET",
 	},
@@ -924,6 +942,9 @@ var timezones = map[string][]string{
 	"NCT": []string{
 		"Pacific/Noumea",
 	},
+	"NDT": []string{
+		"Canada/Newfoundland",
+	},
 	"NFT": []string{
 		"Pacific/Norfolk",
 	},
@@ -949,6 +970,9 @@ var timezones = map[string][]string{
 		"Antarctica/South_Pole",
 		"NZ",
 		"Pacific/Auckland",
+	},
+	"NZST": []string{
+		"Etc/GMT+12",
 	},
 	"OMST": []string{
 		"Asia/Omsk",
