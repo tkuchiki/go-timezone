@@ -721,82 +721,82 @@ var timezones = map[string][]string{
 		"Iceland",
 	},
 	"GMT+1": []string{
-		"Etc/GMT+1",
-	},
-	"GMT+10": []string{
-		"Etc/GMT+10",
-	},
-	"GMT+11": []string{
-		"Etc/GMT+11",
-	},
-	"GMT+12": []string{
-		"Etc/GMT+12",
-	},
-	"GMT+2": []string{
-		"Etc/GMT+2",
-	},
-	"GMT+3": []string{
-		"Etc/GMT+3",
-	},
-	"GMT+4": []string{
-		"Etc/GMT+4",
-	},
-	"GMT+5": []string{
-		"Etc/GMT+5",
-	},
-	"GMT+6": []string{
-		"Etc/GMT+6",
-	},
-	"GMT+7": []string{
-		"Etc/GMT+7",
-	},
-	"GMT+8": []string{
-		"Etc/GMT+8",
-	},
-	"GMT+9": []string{
-		"Etc/GMT+9",
-	},
-	"GMT-1": []string{
 		"Etc/GMT-1",
 	},
-	"GMT-10": []string{
+	"GMT+10": []string{
 		"Etc/GMT-10",
 	},
-	"GMT-11": []string{
+	"GMT+11": []string{
 		"Etc/GMT-11",
 	},
-	"GMT-12": []string{
+	"GMT+12": []string{
 		"Etc/GMT-12",
 	},
-	"GMT-13": []string{
-		"Etc/GMT-13",
-	},
-	"GMT-14": []string{
-		"Etc/GMT-14",
-	},
-	"GMT-2": []string{
+	"GMT+2": []string{
 		"Etc/GMT-2",
 	},
-	"GMT-3": []string{
+	"GMT+3": []string{
 		"Etc/GMT-3",
 	},
-	"GMT-4": []string{
+	"GMT+4": []string{
 		"Etc/GMT-4",
 	},
-	"GMT-5": []string{
+	"GMT+5": []string{
 		"Etc/GMT-5",
 	},
-	"GMT-6": []string{
+	"GMT+6": []string{
 		"Etc/GMT-6",
 	},
-	"GMT-7": []string{
+	"GMT+7": []string{
 		"Etc/GMT-7",
 	},
-	"GMT-8": []string{
+	"GMT+8": []string{
 		"Etc/GMT-8",
 	},
-	"GMT-9": []string{
+	"GMT+9": []string{
 		"Etc/GMT-9",
+	},
+	"GMT-1": []string{
+		"Etc/GMT+1",
+	},
+	"GMT-10": []string{
+		"Etc/GMT+10",
+	},
+	"GMT-11": []string{
+		"Etc/GMT+11",
+	},
+	"GMT-12": []string{
+		"Etc/GMT+12",
+	},
+	"GMT-13": []string{
+		"Etc/GMT+13",
+	},
+	"GMT-14": []string{
+		"Etc/GMT+14",
+	},
+	"GMT-2": []string{
+		"Etc/GMT+2",
+	},
+	"GMT-3": []string{
+		"Etc/GMT+3",
+	},
+	"GMT-4": []string{
+		"Etc/GMT+4",
+	},
+	"GMT-5": []string{
+		"Etc/GMT+5",
+	},
+	"GMT-6": []string{
+		"Etc/GMT+6",
+	},
+	"GMT-7": []string{
+		"Etc/GMT+7",
+	},
+	"GMT-8": []string{
+		"Etc/GMT+8",
+	},
+	"GMT-9": []string{
+		"Etc/GMT+9",
 	},
 	"GST": []string{
 		"Asia/Dubai",
