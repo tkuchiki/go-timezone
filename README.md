@@ -108,3 +108,10 @@ EST
 -14400
 EDT
 ```
+
+# Contributors
+
+- [@alex-tan](https://github.com/alex-tan)
+- [@kkavchakHT](https://github.com/kkavchakHT)
+- [@scottleedavis](https://github.com/scottleedavis)
+- [@sashabaranov](https://github.com/sashabaranov)
