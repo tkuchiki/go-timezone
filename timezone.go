@@ -449,7 +449,7 @@ var timezones = map[string][]string{
 		"Poland",
 	},
 	"CEST": []string{
-		"Etc/GMT+2",
+		"Etc/GMT-2",
 	},
 	"CHADT": []string{
 		"NZ-CHAT",
