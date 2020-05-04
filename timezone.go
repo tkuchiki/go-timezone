@@ -227,7 +227,7 @@ var timezones = map[string][]string{
 		"Asia/Kabul",
 	},
 	"AKDT": []string{
-		"Etc/GMT-8",
+		"Etc/GMT+8",
 	},
 	"AKST": []string{
 		"America/Anchorage",
@@ -406,7 +406,7 @@ var timezones = map[string][]string{
 		"Indian/Cocos",
 	},
 	"CDT": []string{
-		"Etc/GMT-5",
+		"Etc/GMT+5",
 	},
 	"CET": []string{
 		"Africa/Algiers",
@@ -884,7 +884,7 @@ var timezones = map[string][]string{
 		"Antarctica/Mawson",
 	},
 	"MDT": []string{
-		"Etc/GMT-6",
+		"Etc/GMT+6",
 	},
 	"MET": []string{
 		"MET",
@@ -972,7 +972,7 @@ var timezones = map[string][]string{
 		"Pacific/Auckland",
 	},
 	"NZST": []string{
-		"Etc/GMT+12",
+		"Etc/GMT-12",
 	},
 	"OMST": []string{
 		"Asia/Omsk",
