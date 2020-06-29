@@ -1,256 +1,218 @@
 package timezone
 
 import (
+	"reflect"
 	"testing"
 	"time"
 )
 
-var timezoneShorts = []string{
-	"ACST",
-	"ADT",
-	"AEST",
-	"AKDT",
-	"AST",
-	"AWST",
-	"BST",
-	"CDT",
-	"CEST",
-	"CST",
-	"ChST",
-	"EDT",
-	"EEST",
-	"EET",
-	"EST",
-	"GMT",
-	"GMT+1",
-	"GMT+10",
-	"GMT+12",
-	"GMT+2",
-	"GMT+3",
-	"GMT+4",
-	"GMT+4:30",
-	"GMT+5",
-	"GMT+5:30",
-	"GMT+6",
-	"GMT+6:30",
-	"GMT+7",
-	"GMT+8",
-	"GMT+9",
-	"GMT+9:30",
-	"GMT-3",
-	"GMT-4",
-	"GMT-5",
-	"GMT-6",
-	"GMT-7",
-	"HKT",
-	"HST",
-	"IST",
-	"JST",
-	"MDT",
-	"MST",
-	"MYT",
-	"NDT",
-	"NZST",
-	"PDT",
-	"SGT",
-	"UTC−4",
-	"WAT",
-	"WEST",
-	"GMT+12",
-	"GMT+11",
-	"NUT",
-	"SST",
-	"CKT",
-	"GMT+10",
-	"HST",
-	"TAHT",
-	"MART",
-	"AKST",
-	"GAMT",
-	"GMT+9",
-	"GMT+8",
-	"PST",
-	"GMT+7",
-	"MST",
-	"CST",
-	"GALT",
-	"GMT+6",
-	"ACT",
-	"COT",
-	"EAST",
-	"ECT",
-	"EST",
-	"GMT+5",
-	"PET",
-	"VET",
-	"AMT",
-	"AST",
-	"BOT",
-	"GMT+4",
-	"GYT",
-	"NST",
-	"ART",
-	"BRT",
-	"CLT",
-	"FKST",
-	"GFT",
-	"GMT+3",
-	"PMST",
-	"PYST",
-	"ROTT",
-	"SRT",
-	"WGT",
-	"FNT",
-	"GMT+2",
-	"UYST",
-	"AZOT",
-	"CVT",
-	"EGT",
-	"GMT+1",
-	"GMT",
-	"UCT",
-	"UTC",
-	"WET",
-	"CET",
-	"GMT-1",
-	"MET",
-	"WAT",
-	"CAT",
-	"EET",
-	"GMT-2",
-	"SAST",
-	"WAST",
-	"EAT",
-	"GMT-3",
-	"MSK",
-	"SYOT",
-	"IRST",
-	"AZT",
-	"GET",
-	"GMT-4",
-	"GST",
-	"MUT",
-	"RET",
-	"SAMT",
-	"SCT",
-	"AFT",
-	"AQTT",
-	"GMT-5",
-	"MAWT",
-	"MVT",
-	"ORAT",
-	"PKT",
-	"TFT",
-	"TJT",
-	"TMT",
-	"UZT",
-	"YEKT",
-	"IST",
-	"NPT",
-	"ALMT",
-	"BDT",
-	"BTT",
-	"GMT-6",
-	"IOT",
-	"KGT",
-	"NOVT",
-	"OMST",
-	"QYZT",
-	"VOST",
-	"XJT",
-	"CCT",
-	"MMT",
-	"CXT",
-	"DAVT",
-	"GMT-7",
-	"HOVT",
-	"ICT",
-	"KRAT",
-	"WIB",
-	"AWST",
-	"BNT",
-	"CHOT",
-	"GMT-8",
-	"HKT",
-	"IRKT",
-	"MYT",
-	"PHT",
-	"SGT",
-	"ULAT",
-	"WITA",
-	"ACWST",
-	"GMT-9",
-	"JST",
-	"KST",
-	"PWT",
-	"TLT",
-	"WIT",
-	"YAKT",
-	"ACST",
-	"AEST",
-	"CHUT",
-	"ChST",
-	"DDUT",
-	"GMT-10",
-	"MAGT",
-	"PGT",
-	"SAKT",
-	"VLAT",
-	"ACDT",
-	"AEDT",
-	"BST",
-	"GMT-11",
-	"KOST",
-	"LHDT",
-	"MIST",
-	"NCT",
-	"PONT",
-	"SBT",
-	"SRET",
-	"VUT",
-	"NFT",
-	"ANAT",
-	"FJT",
-	"GILT",
-	"GMT-12",
-	"MHT",
-	"NRT",
-	"PETT",
-	"TVT",
-	"WAKT",
-	"WFT",
-	"GMT-13",
-	"NZDT",
-	"PHOT",
-	"TKT",
-	"TOT",
-	"CHADT",
-	"GMT-14",
-	"LINT",
-	"WSDT",
+func TestGetTzAbbreviationInfo(t *testing.T) {
+	t.Parallel()
+
+	tz := New()
+
+	test := struct {
+		abbr      string
+		offset    int
+		errOffset string
+	}{
+		abbr:      "EET",
+		offset:    7200,
+		errOffset: `expected: 7200, actual: %d`,
+	}
+
+	tzAbbrInfo, err := tz.GetTzAbbreviationInfo(test.abbr)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if tzAbbrInfo[0].Offset() != test.offset {
+		t.Fatalf(test.errOffset, test.offset)
+	}
+
+	ambiguousAbbr := "BST"
+	tzAbbrInfo, err = tz.GetTzAbbreviationInfo(ambiguousAbbr)
+	if err != ErrAmbiguousTzAbbreviations {
+		t.Fatal(err)
+	}
 }
 
-func TestAbbreviations(t *testing.T) {
-	for _, abbr := range timezoneShorts {
-		foundTimezones, err := GetTimezones(abbr)
-		if err != nil {
-			t.Errorf("Error loading short timezone %s: %v", abbr, err)
-			continue
-		}
+func TestGetTzAbbreviationInfoByTZName(t *testing.T) {
+	t.Parallel()
 
-		if len(foundTimezones) == 0 {
-			t.Errorf("Empty timezones list in %s", abbr)
-			continue
-		}
+	tz := New()
 
-		for _, tz := range foundTimezones {
-			loc, err := time.LoadLocation(tz)
-			if err != nil {
-				t.Errorf("Error loading location: %s -> %s", abbr, tz)
-			}
-			if loc == nil {
-				t.Errorf("Nil location for %s -> %s", abbr, tz)
-			}
-		}
+	abbr := "BST"
+	name := "British Summer Time"
+	offset := 3600
+
+	tzAbbrInfo, err := tz.GetTzAbbreviationInfoByTZName(abbr, name)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if tzAbbrInfo.Offset() != offset {
+		t.Fatalf(`expected: %d, actual: %d`, offset, tzAbbrInfo.Offset())
+	}
+
+	name = "Invalid Time"
+	tzAbbrInfo, _ = tz.GetTzAbbreviationInfoByTZName(abbr, name)
+	if tzAbbrInfo != nil {
+		t.Fatalf(`expected: "%T", actual: "%T"`, nil, tzAbbrInfo)
+	}
+}
+
+func TestGetTimezones(t *testing.T) {
+	t.Parallel()
+
+	tz := New()
+
+	abbr := "UTC"
+	expectedTimezones := []string{
+		"Etc/UCT",
+		"Etc/UTC",
+		"Etc/Universal",
+		"Etc/Zulu",
+		"UCT",
+		"UTC",
+		"Universal",
+		"Zulu",
+	}
+
+	timezones, err := tz.GetTimezones(abbr)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !reflect.DeepEqual(expectedTimezones, timezones) {
+		t.Fatalf(`expected: %v, actual: %v`, expectedTimezones, timezones)
+	}
+
+	abbr = "Invalid"
+	_, err = tz.GetTimezones(abbr)
+	if err == nil {
+		t.Fatal("Invalid timezone")
+	}
+}
+
+func TestFixedTimezone(t *testing.T) {
+	t.Parallel()
+
+	tz := New()
+
+	baseTime := time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local)
+	timezone := "Europe/Belgrade"
+	expect := 3600
+
+	_time, err := tz.FixedTimezone(baseTime, timezone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	_, offset := _time.Zone()
+	if expect != offset {
+		t.Fatalf(`expected: %d, actual: %d`, expect, offset)
+	}
+
+	timezone = "Invalid/Zone"
+	_time, _ = tz.FixedTimezone(baseTime, timezone)
+	if !_time.IsZero() {
+		t.Fatal("Invalid timezone")
+	}
+}
+
+func TestGetTzInfo(t *testing.T) {
+	t.Parallel()
+
+	tz := New()
+
+	timezone := "Europe/London"
+	expect := "GMT"
+	tzInfo, err := tz.GetTzInfo(timezone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	abbr := tzInfo.ShortStandard()
+	if abbr != expect {
+		t.Fatalf(`expected: %s, actual: %s`, expect, abbr)
+	}
+
+	expect = "BST"
+	abbr = tzInfo.ShortDaylight()
+	if abbr != expect {
+		t.Fatalf(`expected: %s, actual: %s`, expect, abbr)
+	}
+
+	if !tzInfo.HasDST() {
+		t.Fatalf(`expected: true, actual: %v`, tzInfo.HasDST())
+	}
+
+	timezone = "Invalid/Zone"
+	tzInfo, _ = tz.GetTzInfo(timezone)
+	if tzInfo != nil {
+		t.Fatal("Invalid timezone")
+	}
+}
+
+func TestGetOffset(t *testing.T) {
+	t.Parallel()
+
+	tz := New()
+
+	abbr := "GMT"
+	expect := 0
+	offset, err := tz.GetOffset(abbr)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if offset != expect {
+		t.Fatalf(`expected: %d, actual: %d`, expect, offset)
+	}
+
+	abbr = "BST"
+	_, err = tz.GetOffset(abbr, true)
+	if err != ErrAmbiguousTzAbbreviations {
+		t.Fatal(err)
+	}
+
+	abbr = "Invalid"
+	offset, _ = tz.GetOffset(abbr)
+	if offset != 0 {
+		t.Fatal("Invalid timezone abbreviation")
+	}
+}
+
+func TestGetTimezoneAbbreviation(t *testing.T) {
+	t.Parallel()
+
+	tz := New()
+
+	timezone := "Europe/London"
+	expect := "GMT"
+	abbr, err := tz.GetTimezoneAbbreviation(timezone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if abbr != expect {
+		t.Fatalf(`expected: %s, actual: %s`, expect, abbr)
+	}
+
+	expect = "BST"
+	abbr, err = tz.GetTimezoneAbbreviation(timezone, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if abbr != expect {
+		t.Fatalf(`expected: %s, actual: %s`, expect, abbr)
+	}
+
+	timezone = "Invalid/Zone"
+	abbr, _ = tz.GetTimezoneAbbreviation(timezone)
+	if abbr != "" {
+		t.Fatal("Invalid timezone")
 	}
 }
