@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        go: [ '1.14', '1.13', '1.12' ]
+    steps:
+      - uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go }}
+        id: go
+      - run: mkdir -p src/github.com/tkuchiki
+      - uses: actions/checkout@v2
+        with:
+          path: src/github.com/tkuchiki/go-timezone
+      - run: go test -v
+        working-directory: /home/runner/work/go-timezone/go-timezone/src/github.com/tkuchiki/go-timezone
+        env:
+          GOPATH: /home/runner/work/go-timezone/go-timezone

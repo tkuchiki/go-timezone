@@ -7,6 +7,8 @@ Timezone utility for Go
 [GoDocWidget]:https://godoc.org/github.com/tkuchiki/go-timezone?status.svg
 [GoDocReference]:https://godoc.org/github.com/tkuchiki/go-timezone
 
+![Test](https://github.com/tkuchiki/go-timezone/workflows/Test/badge.svg)
+
 ## Data source
 
 https://github.com/tkuchiki/timezones
