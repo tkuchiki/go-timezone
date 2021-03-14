@@ -11,30 +11,27 @@ func TestGetTzAbbreviationInfo(t *testing.T) {
 
 	tz := New()
 
-	test := struct {
-		abbr      string
-		offset    int
-		errOffset string
-	}{
-		abbr:      "EET",
-		offset:    7200,
-		errOffset: `expected: 7200, actual: %d`,
-	}
+	abbr := "EET"
+	want := 7200
+	t.Run("EET is offset 7200", func(t *testing.T) {
+		tzAbbrInfo, err := tz.GetTzAbbreviationInfo(abbr)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-	tzAbbrInfo, err := tz.GetTzAbbreviationInfo(test.abbr)
-	if err != nil {
-		t.Fatal(err)
-	}
+		got := tzAbbrInfo[0].Offset()
+		if got != want {
+			t.Fatalf(`want: %v, got: %v`, want, got)
+		}
+	})
 
-	if tzAbbrInfo[0].Offset() != test.offset {
-		t.Fatalf(test.errOffset, test.offset)
-	}
-
-	ambiguousAbbr := "BST"
-	tzAbbrInfo, err = tz.GetTzAbbreviationInfo(ambiguousAbbr)
-	if err != ErrAmbiguousTzAbbreviations {
-		t.Fatal(err)
-	}
+	t.Run("BST are ambiguous abbreviations", func(t *testing.T) {
+		ambiguousAbbr := "BST"
+		_, err := tz.GetTzAbbreviationInfo(ambiguousAbbr)
+		if err != ErrAmbiguousTzAbbreviations {
+			t.Fatal(err)
+		}
+	})
 }
 
 func TestGetTzAbbreviationInfoByTZName(t *testing.T) {
@@ -43,23 +40,27 @@ func TestGetTzAbbreviationInfoByTZName(t *testing.T) {
 	tz := New()
 
 	abbr := "BST"
-	name := "British Summer Time"
-	offset := 3600
+	t.Run("BST / British Summer Time is offset 3600", func(t *testing.T) {
+		name := "British Summer Time"
+		offset := 3600
 
-	tzAbbrInfo, err := tz.GetTzAbbreviationInfoByTZName(abbr, name)
-	if err != nil {
-		t.Fatal(err)
-	}
+		tzAbbrInfo, err := tz.GetTzAbbreviationInfoByTZName(abbr, name)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-	if tzAbbrInfo.Offset() != offset {
-		t.Fatalf(`expected: %d, actual: %d`, offset, tzAbbrInfo.Offset())
-	}
+		if tzAbbrInfo.Offset() != offset {
+			t.Fatalf(`want: %d, got: %d`, offset, tzAbbrInfo.Offset())
+		}
+	})
 
-	name = "Invalid Time"
-	tzAbbrInfo, _ = tz.GetTzAbbreviationInfoByTZName(abbr, name)
-	if tzAbbrInfo != nil {
-		t.Fatalf(`expected: "%T", actual: "%T"`, nil, tzAbbrInfo)
-	}
+	t.Run("Invalid Time", func(t *testing.T) {
+		name := "Invalid Time"
+		tzAbbrInfo, _ := tz.GetTzAbbreviationInfoByTZName(abbr, name)
+		if tzAbbrInfo != nil {
+			t.Fatalf(`want: "%T", got: "%T"`, nil, tzAbbrInfo)
+		}
+	})
 }
 
 func TestGetTimezones(t *testing.T) {
@@ -67,32 +68,36 @@ func TestGetTimezones(t *testing.T) {
 
 	tz := New()
 
-	abbr := "UTC"
-	expectedTimezones := []string{
-		"Etc/UCT",
-		"Etc/UTC",
-		"Etc/Universal",
-		"Etc/Zulu",
-		"UCT",
-		"UTC",
-		"Universal",
-		"Zulu",
-	}
+	t.Run("UTC", func(t *testing.T) {
+		abbr := "UTC"
+		want := []string{
+			"Etc/UCT",
+			"Etc/UTC",
+			"Etc/Universal",
+			"Etc/Zulu",
+			"UCT",
+			"UTC",
+			"Universal",
+			"Zulu",
+		}
 
-	timezones, err := tz.GetTimezones(abbr)
-	if err != nil {
-		t.Fatal(err)
-	}
+		timezones, err := tz.GetTimezones(abbr)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-	if !reflect.DeepEqual(expectedTimezones, timezones) {
-		t.Fatalf(`expected: %v, actual: %v`, expectedTimezones, timezones)
-	}
+		if !reflect.DeepEqual(want, timezones) {
+			t.Fatalf(`want: %v, got: %v`, want, timezones)
+		}
+	})
 
-	abbr = "Invalid"
-	_, err = tz.GetTimezones(abbr)
-	if err == nil {
-		t.Fatal("Invalid timezone")
-	}
+	t.Run("Invalid/Zone", func(t *testing.T) {
+		abbr := "Invalid"
+		_, err := tz.GetTimezones(abbr)
+		if err == nil {
+			t.Fatal("Invalid timezone")
+		}
+	})
 }
 
 func TestFixedTimezone(t *testing.T) {
@@ -101,24 +106,28 @@ func TestFixedTimezone(t *testing.T) {
 	tz := New()
 
 	baseTime := time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local)
-	timezone := "Europe/Belgrade"
-	expect := 3600
+	t.Run("Europe/Belgrade", func(t *testing.T) {
+		timezone := "Europe/Belgrade"
+		want := 3600
 
-	_time, err := tz.FixedTimezone(baseTime, timezone)
-	if err != nil {
-		t.Fatal(err)
-	}
+		_time, err := tz.FixedTimezone(baseTime, timezone)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-	_, offset := _time.Zone()
-	if expect != offset {
-		t.Fatalf(`expected: %d, actual: %d`, expect, offset)
-	}
+		_, offset := _time.Zone()
+		if want != offset {
+			t.Fatalf(`want: %d, got: %d`, want, offset)
+		}
+	})
 
-	timezone = "Invalid/Zone"
-	_time, _ = tz.FixedTimezone(baseTime, timezone)
-	if !_time.IsZero() {
-		t.Fatal("Invalid timezone")
-	}
+	t.Run("Invalid/Zone", func(t *testing.T) {
+		timezone := "Invalid/Zone"
+		_time, _ := tz.FixedTimezone(baseTime, timezone)
+		if !_time.IsZero() {
+			t.Fatal("Invalid timezone")
+		}
+	})
 }
 
 func TestGetTzInfo(t *testing.T) {
@@ -126,33 +135,37 @@ func TestGetTzInfo(t *testing.T) {
 
 	tz := New()
 
-	timezone := "Europe/London"
-	expect := "GMT"
-	tzInfo, err := tz.GetTzInfo(timezone)
-	if err != nil {
-		t.Fatal(err)
-	}
+	t.Run("Europe/London", func(t *testing.T) {
+		timezone := "Europe/London"
+		want := "GMT"
+		tzInfo, err := tz.GetTzInfo(timezone)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-	abbr := tzInfo.ShortStandard()
-	if abbr != expect {
-		t.Fatalf(`expected: %s, actual: %s`, expect, abbr)
-	}
+		abbr := tzInfo.ShortStandard()
+		if abbr != want {
+			t.Fatalf(`want: %s, got: %s`, want, abbr)
+		}
 
-	expect = "BST"
-	abbr = tzInfo.ShortDaylight()
-	if abbr != expect {
-		t.Fatalf(`expected: %s, actual: %s`, expect, abbr)
-	}
+		want = "BST"
+		abbr = tzInfo.ShortDaylight()
+		if abbr != want {
+			t.Fatalf(`want: %s, got: %s`, want, abbr)
+		}
 
-	if !tzInfo.HasDST() {
-		t.Fatalf(`expected: true, actual: %v`, tzInfo.HasDST())
-	}
+		if !tzInfo.HasDST() {
+			t.Fatalf(`want: true, got: %v`, tzInfo.HasDST())
+		}
+	})
 
-	timezone = "Invalid/Zone"
-	tzInfo, _ = tz.GetTzInfo(timezone)
-	if tzInfo != nil {
-		t.Fatal("Invalid timezone")
-	}
+	t.Run("Invalid/Zone", func(t *testing.T) {
+		timezone := "Invalid/Zone"
+		tzInfo, _ := tz.GetTzInfo(timezone)
+		if tzInfo != nil {
+			t.Fatal("Invalid timezone")
+		}
+	})
 }
 
 func TestGetOffset(t *testing.T) {
@@ -160,28 +173,35 @@ func TestGetOffset(t *testing.T) {
 
 	tz := New()
 
-	abbr := "GMT"
-	expect := 0
-	offset, err := tz.GetOffset(abbr)
-	if err != nil {
-		t.Fatal(err)
-	}
+	t.Run("GMT offset is 0", func(t *testing.T) {
+		abbr := "GMT"
+		want := 0
+		offset, err := tz.GetOffset(abbr)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-	if offset != expect {
-		t.Fatalf(`expected: %d, actual: %d`, expect, offset)
-	}
+		if offset != want {
+			t.Fatalf(`want: %d, got: %d`, want, offset)
+		}
+	})
 
-	abbr = "BST"
-	_, err = tz.GetOffset(abbr, true)
-	if err != ErrAmbiguousTzAbbreviations {
-		t.Fatal(err)
-	}
+	t.Run("BST are ambiguous abbreviations", func(t *testing.T) {
+		abbr := "BST"
+		_, err := tz.GetOffset(abbr, true)
+		if err != ErrAmbiguousTzAbbreviations {
+			t.Fatal(err)
+		}
+	})
 
-	abbr = "Invalid"
-	offset, _ = tz.GetOffset(abbr)
-	if offset != 0 {
-		t.Fatal("Invalid timezone abbreviation")
-	}
+	t.Run("Invalid abbreviation", func(t *testing.T) {
+		abbr := "Invalid"
+		offset, _ := tz.GetOffset(abbr)
+		if offset != 0 {
+			t.Fatal("Invalid timezone abbreviation")
+		}
+	})
+
 }
 
 func TestGetTimezoneAbbreviation(t *testing.T) {
@@ -189,31 +209,43 @@ func TestGetTimezoneAbbreviation(t *testing.T) {
 
 	tz := New()
 
-	timezone := "Europe/London"
-	expect := "GMT"
-	abbr, err := tz.GetTimezoneAbbreviation(timezone)
-	if err != nil {
-		t.Fatal(err)
+	cases := map[string]struct {
+		want     string
+		dst      bool
+		timezone string
+		skipErr  bool
+	}{
+		"Europe/London is GMT": {
+			want:     "GMT",
+			dst:      false,
+			timezone: "Europe/London",
+			skipErr:  false,
+		},
+		"Europe/London is BST when DST": {
+			want:     "BST",
+			dst:      true,
+			timezone: "Europe/London",
+			skipErr:  false,
+		},
+		"Invalid/Zone is empty": {
+			want:     "",
+			timezone: "Invalid/Zone",
+			skipErr:  true,
+		},
 	}
 
-	if abbr != expect {
-		t.Fatalf(`expected: %s, actual: %s`, expect, abbr)
-	}
+	for name, tc := range cases {
+		tc := tc
+		t.Run(name, func(t *testing.T) {
+			abbr, err := tz.GetTimezoneAbbreviation(tc.timezone, tc.dst)
+			if !tc.skipErr && err != nil {
+				t.Fatal(err)
+			}
 
-	expect = "BST"
-	abbr, err = tz.GetTimezoneAbbreviation(timezone, true)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if abbr != expect {
-		t.Fatalf(`expected: %s, actual: %s`, expect, abbr)
-	}
-
-	timezone = "Invalid/Zone"
-	abbr, _ = tz.GetTimezoneAbbreviation(timezone)
-	if abbr != "" {
-		t.Fatal("Invalid timezone")
+			if abbr != tc.want {
+				t.Fatalf(`want: %s, got: %s`, tc.want, abbr)
+			}
+		})
 	}
 }
 
@@ -222,43 +254,50 @@ func TestIsDST(t *testing.T) {
 
 	tz := New()
 
-	timezone := "America/New_York"
-	expect := false
-	loc, err := time.LoadLocation(timezone)
+	locNY, err := time.LoadLocation("America/New_York")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	tNotDST := time.Date(2021, 1, 1, 1, 0, 0, 0, loc)
-	isDST := tz.IsDST(tNotDST)
-	if isDST {
-		t.Fatalf(`expected: %v, actual: %v`, expect, isDST)
-	}
-
-	expect = true
-
-	tDST := time.Date(2021, 7, 1, 1, 0, 0, 0, loc)
-	isDST = tz.IsDST(tDST)
-	if !isDST {
-		t.Fatalf(`expected: %v, actual: %v`, expect, isDST)
-	}
-
-	timezone = "UTC"
-	expect = false
-	loc, err = time.LoadLocation(timezone)
+	locUTC, err := time.LoadLocation("UTC")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	tNotDST = time.Date(2021, 1, 1, 1, 0, 0, 0, loc)
-	isDST = tz.IsDST(tNotDST)
-	if isDST {
-		t.Fatalf(`expected: %v, actual: %v`, expect, isDST)
+	cases := map[string]struct {
+		want bool
+		loc  *time.Location
+		t    time.Time
+	}{
+		"America/New_York is not DST on 2021-01-01 at 0:00": {
+			want: false,
+			loc:  locNY,
+			t:    time.Date(2021, 1, 1, 1, 0, 0, 0, locNY),
+		},
+		"America/New_York is DST on 2021-07-01 at 0:00": {
+			want: true,
+			loc:  locNY,
+			t:    time.Date(2021, 7, 1, 1, 0, 0, 0, locNY),
+		},
+		"UTC is not DST on 2021-01-01 at 0:00": {
+			want: false,
+			loc:  locUTC,
+			t:    time.Date(2021, 1, 1, 1, 0, 0, 0, locUTC),
+		},
+		"UTC is not DST on 2021-07-01 at 0:00": {
+			want: false,
+			loc:  locUTC,
+			t:    time.Date(2021, 7, 1, 1, 0, 0, 0, locUTC),
+		},
 	}
 
-	tNotDST = time.Date(2021, 7, 1, 1, 0, 0, 0, loc)
-	isDST = tz.IsDST(tNotDST)
-	if isDST {
-		t.Fatalf(`expected: %v, actual: %v`, expect, isDST)
+	for name, tc := range cases {
+		tc := tc
+		t.Run(name, func(t *testing.T) {
+			isDST := tz.IsDST(tc.t)
+			if tc.want != isDST {
+				t.Fatalf(`want: %v, got: %v`, tc.want, isDST)
+			}
+		})
 	}
 }
