@@ -216,3 +216,49 @@ func TestGetTimezoneAbbreviation(t *testing.T) {
 		t.Fatal("Invalid timezone")
 	}
 }
+
+func TestIsDST(t *testing.T) {
+	t.Parallel()
+
+	tz := New()
+
+	timezone := "America/New_York"
+	expect := false
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	tNotDST := time.Date(2021, 1, 1, 1, 0, 0, 0, loc)
+	isDST := tz.IsDST(tNotDST)
+	if isDST {
+		t.Fatalf(`expected: %v, actual: %v`, expect, isDST)
+	}
+
+	expect = true
+
+	tDST := time.Date(2021, 7, 1, 1, 0, 0, 0, loc)
+	isDST = tz.IsDST(tDST)
+	if !isDST {
+		t.Fatalf(`expected: %v, actual: %v`, expect, isDST)
+	}
+
+	timezone = "UTC"
+	expect = false
+	loc, err = time.LoadLocation(timezone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	tNotDST = time.Date(2021, 1, 1, 1, 0, 0, 0, loc)
+	isDST = tz.IsDST(tNotDST)
+	if isDST {
+		t.Fatalf(`expected: %v, actual: %v`, expect, isDST)
+	}
+
+	tNotDST = time.Date(2021, 7, 1, 1, 0, 0, 0, loc)
+	isDST = tz.IsDST(tNotDST)
+	if isDST {
+		t.Fatalf(`expected: %v, actual: %v`, expect, isDST)
+	}
+}

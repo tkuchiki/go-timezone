@@ -174,3 +174,28 @@ func (tz *Timezone) GetTimezoneAbbreviation(timezone string, dst ...bool) (strin
 
 	return tzinfo.ShortDaylight(), nil
 }
+
+// IsDST returns whether a given time is daylight saving time or not.
+func (tz *Timezone) IsDST(t time.Time) bool {
+	t1 := time.Date(t.Year(), time.January, 1, 0, 0, 0, 0, t.Location())
+	t2 := time.Date(t.Year(), time.July, 1, 0, 0, 0, 0, t.Location())
+
+	_, tOffset := t.Zone()
+	_, t1Offset := t1.Zone()
+	_, t2Offset := t2.Zone()
+
+	var dstOffset int
+	if t1Offset > t2Offset {
+		dstOffset = t1Offset
+	} else if t1Offset < t2Offset {
+		dstOffset = t2Offset
+	} else {
+		return false
+	}
+
+	if dstOffset == tOffset {
+		return true
+	}
+
+	return false
+}

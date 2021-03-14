@@ -120,3 +120,19 @@ func ExampleTimezone_GetTimezoneAbbreviation_dst() {
 	// Output:
 	// BST
 }
+
+func ExampleTimezone_IsDST() {
+	tz := timezone.New()
+
+	loc, _ := time.LoadLocation("America/New_York")
+	_time := time.Date(2021, 7, 1, 0, 0, 0, 0, loc)
+	isDST := tz.IsDST(_time)
+
+	_time = time.Date(2021, 1, 1, 0, 0, 0, 0, loc)
+	isNotDST := tz.IsDST(_time)
+	fmt.Println(isDST)
+	fmt.Println(isNotDST)
+	// Output:
+	// true
+	// false
+}
