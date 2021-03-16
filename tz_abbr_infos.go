@@ -2551,6 +2551,87 @@ var tzAbbrInfos = map[string][]*TzAbbreviationInfo{
 			offsetHHMM:  "+12:00",
 		},
 	},
+	"GMT+3:30": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time +3:30",
+			offset:      12600,
+			offsetHHMM:  "+03:30",
+		},
+	},
+	"GMT+4:30": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time +4:30",
+			offset:      16200,
+			offsetHHMM:  "+04:30",
+		},
+	},
+	"GMT+5:45": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time +5:45",
+			offset:      20700,
+			offsetHHMM:  "+05:45",
+		},
+	},
+	"GMT+6:30": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time +6:30",
+			offset:      23400,
+			offsetHHMM:  "+06:30",
+		},
+	},
+	"GMT+8:45": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time +8:45",
+			offset:      31500,
+			offsetHHMM:  "+08:45",
+		},
+	},
+	"GMT+9:30": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time +9:30",
+			offset:      34200,
+			offsetHHMM:  "+09:30",
+		},
+	},
+	"GMT+10:30": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time +10:30",
+			offset:      37800,
+			offsetHHMM:  "+10:30",
+		},
+	},
+	"GMT+13:45": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time +13:45",
+			offset:      49500,
+			offsetHHMM:  "+13:45",
+		},
+	},
+	"GMT-9:30": []*TzAbbreviationInfo{
+		{
+			countryCode: "",
+			isDST:       false,
+			name:        "Greenwich Mean Time -9:30",
+			offset:      -34200,
+			offsetHHMM:  "-09:30",
+		},
+	},
 	// military timezones
 	"A": []*TzAbbreviationInfo{
 		{
