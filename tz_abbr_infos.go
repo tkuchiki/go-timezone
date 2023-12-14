@@ -519,8 +519,8 @@ var tzAbbrInfos = map[string][]*TzAbbreviationInfo{
 			countryCode: "CA",
 			isDST:       false,
 			name:        "Pacific Standard Time",
-			offset:      -25200,
-			offsetHHMM:  "-07:00",
+			offset:      -28800,
+			offsetHHMM:  "-08:00",
 		},
 		{
 			countryCode: "PN",
