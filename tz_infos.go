@@ -7153,7 +7153,7 @@ var tzInfos = map[string]*TzInfo{
 		linkTo:             "",
 		lastDST:            2010,
 	},
-	"Europe/Kiev": &TzInfo{
+	"Europe/Kyiv": &TzInfo{
 		longGeneric:        "Eastern European Time",
 		longStandard:       "Eastern European Standard Time",
 		longDaylight:       "Eastern European Summer Time",
@@ -7649,7 +7649,7 @@ var tzInfos = map[string]*TzInfo{
 		linkTo:             "",
 		lastDST:            2010,
 	},
-	"Europe/Uzhgorod": &TzInfo{
+	"Europe/Uzhhorod": &TzInfo{
 		longGeneric:        "Eastern European Time",
 		longStandard:       "Eastern European Standard Time",
 		longDaylight:       "Eastern European Summer Time",
@@ -7777,7 +7777,7 @@ var tzInfos = map[string]*TzInfo{
 		linkTo:             "Europe/Belgrade",
 		lastDST:            2037,
 	},
-	"Europe/Zaporozhye": &TzInfo{
+	"Europe/Zaporizhzhia": &TzInfo{
 		longGeneric:        "Eastern European Time",
 		longStandard:       "Eastern European Standard Time",
 		longDaylight:       "Eastern European Summer Time",
